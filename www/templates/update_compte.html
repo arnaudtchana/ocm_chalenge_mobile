@@ -1,0 +1,41 @@
+<ion-view view-title="Mise à jour du compte">
+  <ion-content>
+      <p>Ici la page permettant de mettre a jour un compte agent</p>
+    <div class="list list-inset">
+      <form name="myForm">
+        <label class="item item-input">
+          <input type="text" name="name" placeholder="Nom" ng-model="data.nom" required>
+        </label>
+        <label class="item item-input">
+          <input type="text" name="surname" placeholder="Prénom" ng-model="data.prenom" required>
+        </label>
+        <label class="item item-input">
+          <input type="tel" name="phone" placeholder="Téléphone" ng-model="data.tel" required>
+        </label>
+        <label class="item item-input">
+          <input type="text" name="username" placeholder="Nom d'utilidateur" ng-model="data.username" required>
+        </label>
+        <p>Changer votre mot de passe</p>
+        <label class="item item-input">
+          <input type="password" name="password" placeholder="Nouveau Mot de passe" ng-model="data.password" ng-minlength="6" required>
+        </label>
+        <label class="item item-input">
+          <input type="password" name="confirm_password" placeholder="Confirmation du mot de passe" ng-model="data.password_confirm">
+        </label>
+      </form>
+    </div>
+    <div class="padding">
+      <p style="color:red;">{{error_nouveau_tel}}</p>
+      <p style="color:red;">{{error_username}}</p>
+    </div>
+    <div class="padding">
+      <p ng-show="myForm.name.$touched && myForm.name.$error.required">* Name is required</p>
+      <p ng-show="myForm.surname.$touched && myForm.surname.$error.required">* Surname is required</p>
+      <p ng-show="myForm.phone.$touched && myForm.phone.$error.required">* Phone is required</p>
+      <p ng-show="myForm.username.$touched && myForm.username.$error.required">* Username is required</p>
+      <p ng-show="myForm.username.$error.minlength">* Username must be longer than 5 characters</p>
+      <p ng-show="myForm.password.$error.minlength">* Password must be longer than 6 characters</p>
+    </div>
+    <button class="button button-block button-calm" ng-click="update_compte()">Valider</button>
+  </ion-content>
+</ion-view>

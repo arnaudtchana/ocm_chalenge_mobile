@@ -1,0 +1,16 @@
+<ion-view view-title="Liste des kiosques">
+  <ion-content>
+    <p>{{info_modif}}</p>
+    <p>{{aucun_kiosque}}</p>
+    <ion-list>
+      <ul class="list">
+        <li ng-repeat="kiosque in kiosques_user" class="item">
+          <span style="margin-right: 10px; font-size: 25px;"><a style="color:#00785a" href="#/app/update_kiosque/{{kiosque.id}}"><i class="icon ion-edit"></i></a></span>
+          <span ng-click="delete_kiosque(kiosque.id)"><i style="color: red;margin-right: 10px;font-size: 25px" class="icon ion-android-delete"></i></span>
+          {{kiosque.nom_kiosque}}
+        </li>
+
+      </ul>
+    </ion-list>
+  </ion-content>
+</ion-view>

@@ -1,0 +1,53 @@
+<!--ici la page permettant d'ajouter un kiosque-->
+<ion-view view-title="Ajout d'un kiosque">
+  <ion-content>
+    <div class="list list-inset">
+      <!--<label class="item item-input">
+        <input type="text" placeholder="First Name">
+      </label>-->
+      <form name="form" novalidate>
+      <div class="list">
+
+
+          <div class="input-label">
+            Services
+          </div>
+          <!--<select name="service" ng-model="data.service" required>
+            <option ng-repeat="ser in services" value="{{ser.id}}">{{ser.nom}}</option>
+          </select>-->
+
+        <ion-checkbox ng-repeat="ser in services" ng-model="ser.checked" ng-checked="ser.checked">{{ser.nom}}</ion-checkbox>
+      </div>
+        <label class="item item-input">
+          <input type="text" name="nom_kiosque" ng-model="data.nom_kiosque" placeholder="Nom du kiosque" required>
+        </label>
+      <label class="item item-input">
+        <input type="text" name="ville" ng-model="data.ville" placeholder="Ville" required>
+      </label>
+      <label class="item item-input">
+        <input type="text" name="quartier" ng-model="data.quartier" placeholder="Quartier" required>
+      </label>
+      <label class="item item-input">
+        <textarea type="text" name="description" ng-model="data.description" placeholder="Description">
+          </textarea>
+      </label>
+      <label class="item item-input">
+        <input type="text" name="latitude" ng-model="data.latitude" placeholder="Latitude" required>
+      </label>
+      <label class="item item-input">
+        <input type="text" name="longitude" ng-model="data.longitude" placeholder="Longitude" required>
+      </label>
+      </form>
+      <button class="button button-block button-calm" ng-click="changer_position()">Changer de position</button>
+      <button class="button button-block button-calm" ng-click="compte_boutique(form.$valid)" type="submit">Valider</button>
+      <p style="color: red">{{erreur_nom_kiosque}}</p>
+      <span style="color: red" ng-show="form.nom_kiosque.$invalid"> *Le nom du kiosque est obligatoire</span><br>
+      <!--<span style="color: red" ng-show="form.service.$invalid"> *Le type de service est obligatoire</span><br>-->
+      <span style="color: red" ng-show="form.ville.$invalid"> *La ville est obligatoire</span><br>
+      <span style="color: red" ng-show="form.quartier.$invalid"> *Le quartier est obligatoire</span><br>
+      <span style="color: red" ng-show="form.latitude.$invalid"> *La latitude est obligatoire</span><br>
+      <span style="color: red" ng-show="form.longitude.$invalid"> *La longitude est obligatoire</span>
+
+    </div>
+  </ion-content>
+</ion-view>

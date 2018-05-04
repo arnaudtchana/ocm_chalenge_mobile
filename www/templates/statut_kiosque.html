@@ -1,0 +1,19 @@
+<ion-view view-title="Changer le statut d'un kiosque">
+  <ion-content>
+    <ion-list>
+      <p>{{texte_boutique}}</p>
+      <p>{{aucune_boutique}}</p>
+      <ul class="list">
+
+        <ion-toggle ng-repeat="kiosque in kiosques_user" ng-change="update_statut($index)"
+                    ng-model="kiosque.statut"
+                    ng-checked="kiosque.statut">
+          {{ kiosque.nom_kiosque }}
+        </ion-toggle>
+
+      </ul>
+
+    </ion-list>
+
+  </ion-content>
+</ion-view>
