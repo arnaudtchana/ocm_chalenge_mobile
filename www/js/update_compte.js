@@ -2,7 +2,7 @@
  * Created by user on 04/03/2018.
  */
 app
-  .controller('UpdateCompteCtrl', function($scope,$state,Restangular,$cordovaGeolocation,$stateParams,$auth,$sessionStorage,Users,Persons,$ionicLoading) {
+  .controller('UpdateCompteCtrl', function($scope,$state,Restangular,$cordovaGeolocation,$stateParams,$auth,$sessionStorage,Users,Persons,$ionicLoading,ionicToast,$translate) {
 
     //$scope.initial = {};
 
@@ -50,7 +50,10 @@ app
         /*on teste si le mot de passe et la confimation sont bons*/
         console.log($scope.data.password)
         if($scope.data.password !== $scope.data.password_confirm){
-          alert("le mot de passe et la confirmation ne sont pas identiques");
+          $translate('password_different_confirmation').then(function (translation) {
+            alert(translation);
+          })
+
           $scope.data.password = "";
           $scope.data.password_confirm = "";
         }else {
@@ -75,20 +78,27 @@ app
             Persons.getList({tel:$scope.data.tel}).then(function (response) {
               if(response.metadata.total !=0 && $scope.data.tel != $scope.ancien_tel){
                 $ionicLoading.hide();
-                $scope.error_nouveau_tel = "Ce numéro de téléphone est déjà utilisé"
+                $translate('tel_deja_utiliser').then(function (translation) {
+                  $scope.error_nouveau_tel = translation;
+                })
+
               }else{
                 /*on fait la mise a jour*/
                 /*on fait la mise a jour a ce niveau en commencant par la personne*/
 
                 Update_person.put(person_update).then(function (data) {
                   console.log("mise a jour effectuee")
+                  ionicToast.show('Mise à jour effectuée avec succès', 'middle', false, 2000);
                   if($scope.data.username !=$scope.ancien_username){
                     /*le username a changer on voit si le mot de passe aussi*/
                     /*on se rassure que le nouveau nom d'utilisateur n'est pas encore utiliser*/
                     Users.getList({username:$scope.data.username}).then(function (data) {
                       if(data.metadata.total !=0){
                         $ionicLoading.hide();
-                        $scope.error_username = "Le nom d'utilisateur est déjà utilisé";
+                        $translate('username_utiliser').then(function (tanslation) {
+                          $scope.error_username = tanslation;
+                        })
+
                       }else{
                         /*on continue*/
                         if($scope.data.password ==undefined || $scope.data.password==""){
@@ -99,6 +109,7 @@ app
                           User_update.put(user_username).then(function (response) {
                             $ionicLoading.hide();
                             console.log('mise a jour effectuee')
+                            ionicToast.show('Mise à jour effectuée avec succès', 'middle', false, 2000);
                           },function (error) {
                             $ionicLoading.hide();
                           })
@@ -107,6 +118,7 @@ app
                           User_update.put(user_all).then(function (response) {
                             $ionicLoading.hide();
                             console.log('mise a jour effectuee')
+                            ionicToast.show('Mise à jour effectuée avec succès', 'middle', false, 2000);
                           },function (error) {
                             $ionicLoading.hide();
                           })
@@ -125,6 +137,7 @@ app
                       User_update.put(user_all).then(function (response) {
                         $ionicLoading.hide();
                         console.log('mise a jour effectuee')
+                        ionicToast.show('Mise à jour effectuée avec succès', 'middle', false, 2000);
                       },function (error) {
                         $ionicLoading.hide();
                       })
@@ -149,7 +162,10 @@ app
         }
 
       }else{
-        alert("numero de telephone invalide");
+        $translate('tel_invalide').then(function (translation) {
+          alert(translation);
+        })
+
         $scope.data.tel = "";
       }
       /*ensuite l'identite des deux mot de passe*/

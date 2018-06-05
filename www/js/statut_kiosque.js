@@ -2,10 +2,13 @@
  * Created by user on 27/02/2018.
  */
 app
-  .controller('StatutKiosqueCtrl', function($scope,$state,Restangular,$cordovaGeolocation,$stateParams,$auth,$sessionStorage,$ionicLoading) {
+  .controller('StatutKiosqueCtrl', function($scope,$state,Restangular,$cordovaGeolocation,$stateParams,$auth,$sessionStorage,$ionicLoading,ionicToast,$translate) {
     $scope.data = {};
     /*on doit recuperer la liste des kiosques de lutilisateur conneceter*/
     /*on lance le loading ici*/
+    /*$scope.change_depot = function(index){
+     console.log( $scope.kiosques_user[index]);
+    }*/
     $scope.$on('$ionicView.enter', function () {
       $scope.aucune_boutique = "";
       $scope.texte_boutique = "";
@@ -16,12 +19,28 @@ app
       Kiosque.get({user_id:$sessionStorage.user_id}).then(function (data) {
         $ionicLoading.hide();
         if(data.total ==0){
-          $scope.aucune_boutique = "Pas de kiosque enregistré";
+          $translate('pas_de_kiosque').then(function (translation) {
+            $scope.aucune_boutique = translation;
+          });
         }else{
-          $scope.texte_boutique = "Vous pouvez changer le statut d'une boutique pour dire si elle est fermée ou pas";
+
+          $translate('texte_statut_kiosque').then(function (translation) {
+            $scope.texte_boutique = translation;
+          })
         }
         $scope.kiosques_user = data.data;
-        console.log(data.total);
+        /*angular.forEach($scope.kiosques_user,function (value,cle) {
+          //console.log('id',valeur.id)
+          if(value.depot == true){
+            /!*on met a true*!/
+            $scope.kiosques_user[cle].depot.checked = true;
+          }
+          if(value.retrait == true){
+            /!*on met a true*!/
+            $scope.kiosques_user[cle].retrait.checked = true;
+          }
+        })*/
+        console.log(data.total,$scope.kiosques_user);
       },function (error) {
         $ionicLoading.hide();
       })
@@ -37,6 +56,7 @@ app
         Kiosque_statut.put($scope.kiosques_user[index]).then(function (response) {
           console.log(response)
           $ionicLoading.hide();
+          ionicToast.show('Mise à jour effectuée avec succès', 'middle', false, 2000);
         },function (error) {
           $ionicLoading.hide();
           console.log(error)

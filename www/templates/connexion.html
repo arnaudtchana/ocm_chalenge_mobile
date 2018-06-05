@@ -1,15 +1,22 @@
 <ion-view view-title="Login" name="login-view">
-  <ion-content class="padding">
-    <div class="list list-inset">
+  <ion-content class="padding" style="background-color: black">
+    <!--<h1 style="text-align: center;font-family: italic;color: #f16e00;">OM Locate</h1>-->
+    <h1 style="text-align: center"><span style="font-size: 100px;color: #f16e00;text-align: center"><i class="icon ion-location"></i></span></h1>
+    <div class="list list-inset decalage_connexion">
       <label class="item item-input">
-        <input type="text" placeholder="Username" ng-model="data.username">
+        <input type="text" placeholder="{{'nom_utilisateur' | translate}}" ng-model="data.username">
       </label>
       <label class="item item-input">
-        <input type="password" placeholder="Password" ng-model="data.password">
+        <input type="password" placeholder="{{'mot_passe' | translate}}" ng-model="data.password">
       </label>
     </div>
     <p style="color:red;">{{error}}</p>
-    <button class="button button-block button-calm" ng-click="login()">Login</button>
-    <button class="button button-block button-calm" ui-sref="register">Register</button>
+    <button class="button button-block orange_color" ng-click="login()">{{"connexion" | translate}}</button>
+    <button class="button button-block orange_color" ui-sref="register">{{"creer_compte" | translate}}</button>
+    <div class="row" style="padding-bottom: 10%;margin-top: 10px">
+      <div class="col"></div>
+      <div class="col text-center" ng-click="update_langue(langue)"><span style="min-height: 32px;min-width: 32px;background-color: inherit" class="button flag-icon flag-icon-{{flag}} flag-icon-squared"></span></div>
+      <div class="col"></div>
+    </div>
   </ion-content>
 </ion-view>

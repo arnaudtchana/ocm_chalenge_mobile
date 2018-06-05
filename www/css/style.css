@@ -1,1 +1,50 @@
 /* Empty. Add your own CSS if you like */
+.orange_color{
+  background-color: #f16e00;
+  color: white;
+}
+.decalage_connexion{
+  margin-top: 35%;
+}
+.bar_color{
+  color: white;
+  background-color: #f16e00;
+}
+.checkbox input:checked:before, .checkbox input:checked + .checkbox-icon:before {
+  background: black;
+  border-color: black;
+}
+
+.button-clear.button-clear {
+  border-color: transparent;
+  /* background: none; */
+  /* box-shadow: none; */
+  color: white;
+}
+.button.button-positive {
+  border-color: transparent;
+  background-color: #f16e00;
+  color: #fff;
+}
+.popup-body {
+  background-color: white;
+}
+.popup-buttons {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-direction: normal;
+  -webkit-box-orient: horizontal;
+  -webkit-flex-direction: row;
+  -moz-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+   padding: 0px;
+   min-height: 0px;
+}
+div.popup-head{
+  display: none;
+}

@@ -2,7 +2,7 @@
  * Created by user on 28/02/2018.
  */
 app
-  .controller('ListeKiosqueCtrl', function($scope,$state,Restangular,$cordovaGeolocation,$stateParams,$auth,$sessionStorage,$ionicLoading,$ionicPopup,ionicToast) {
+  .controller('ListeKiosqueCtrl', function($scope,$state,Restangular,$cordovaGeolocation,$stateParams,$auth,$sessionStorage,$ionicLoading,$ionicPopup,ionicToast,$translate) {
     $scope.data = {};
     /*on doit recuperer la liste des kiosques de lutilisateur conneceter*/
     $scope.$on('$ionicView.enter', function () {
@@ -11,11 +11,20 @@ app
       $ionicLoading.show({
         template: 'Loading...',
       })
+      $translate('confirm_delete_kiosque').then(function (translation) {
+        $scope.confirm_suppression = translation
+      });
+      $translate('supprimer').then(function (translation) {
+        $scope.titre_suppression = translation;
+      });
       var Kiosque = Restangular.one('kiosque');
       Kiosque.get({user_id:$sessionStorage.user_id}).then(function (data) {
         $ionicLoading.hide();
         if(data.total == 0){
-          $scope.aucun_kiosque = "Aucun kiosque enregistré"
+
+          $translate('aucun_kiosque').then(function (translation) {
+            $scope.aucun_kiosque = translation;
+          })
         }else{
           $scope.info_modif = "Sélectionner le kiosque dont vous souhaitez modifier les informations";
         }
@@ -30,9 +39,10 @@ app
         //alert("le supprime le kiosque"+id);
         /*on affiche une boite de dialogue pour demander de confirmer la suppression*/
         // A confirm dialog
+
    var confirmPopup = $ionicPopup.confirm({
-     title: 'Supprimer',
-     template: 'Voulez-vous vraiment supprimer le kiosque ?'
+     title: $scope.titre_suppression,
+     template: $scope.confirm_suppression
    });
 
    confirmPopup.then(function(res) {

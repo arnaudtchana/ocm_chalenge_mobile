@@ -2,8 +2,10 @@
  * Created by user on 20/02/2018.
  */
 app
-  .controller('ConnexionCtrl', function($scope,$state,Restangular,$cordovaGeolocation,$stateParams,$auth,$sessionStorage,$ionicLoading) {
+  .controller('ConnexionCtrl', function($scope,$state,Restangular,$cordovaGeolocation,$stateParams,$auth,$sessionStorage,$ionicLoading,$translate) {
     $scope.data = {};
+    $scope.flag = "fr";
+    $scope.langue = "Français";
     $scope.login = function () {
       console.log($scope.data);
       /*on va finaliser avec le processus de connexion plutard*/
@@ -35,9 +37,35 @@ console.log(data);
         console.log(error.status);
         if(error.status==401){
           //$scope.error = error.data.error;
-          $scope.error = "Paramètres de connexion invalides";
+          $translate('parametre_invalide').then(function (translation) {
+            $scope.error = translation;
+          })
+
         }
 
       });
+    }
+
+    $scope.logout = function () {
+      /**/
+      $auth.logout();
+      $state.go('connexion');
+    }
+
+    $scope.update_langue = function (langue) {
+      /*on recupere la langue*/
+      //alert(langue);
+      if (langue == "Anglais") {
+        $translate.use("fr");
+        $scope.flag = "fr";
+        $scope.langue = "Français";
+      } else {
+        $translate.use("en");
+        $scope.flag = "gb";
+        $scope.langue = "Anglais";
+      }
+      //$rootScope.lang = $translate.use();
+      $state.go($state.current, {}, {reload: true});
+      /*permet de recharger la page courrante pour update la langue*/
     }
   });

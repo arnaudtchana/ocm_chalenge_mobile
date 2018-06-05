@@ -1,17 +1,22 @@
-<ion-view view-title="Changer le statut d'un kiosque">
+<ion-view view-title="{{'titre_statut_kiosque' | translate}}">
   <ion-content>
     <ion-list>
-      <p>{{texte_boutique}}</p>
-      <p>{{aucune_boutique}}</p>
-      <ul class="list">
+      <div class="padding">
+        <h5 style="text-align: center">{{texte_boutique}}</h5>
+        <p>{{aucune_boutique}}</p>
+        <ul class="list" ng-repeat="kiosque in kiosques_user">
 
-        <ion-toggle ng-repeat="kiosque in kiosques_user" ng-change="update_statut($index)"
-                    ng-model="kiosque.statut"
-                    ng-checked="kiosque.statut">
-          {{ kiosque.nom_kiosque }}
-        </ion-toggle>
+          <ion-toggle
+            ng-model="kiosque.statut"
+            ng-checked="kiosque.statut">
+            {{ kiosque.nom_kiosque }}
+          </ion-toggle>
+          <ion-checkbox ng-model="kiosque.depot" ng-change="change_depot($index)" ng-checked="kiosque.depot">{{'depot' | translate}}</ion-checkbox>
+          <ion-checkbox ng-model="kiosque.retrait" ng-checked="kiosque.retrait">{{'retrait' | translate}}</ion-checkbox>
+          <button class="button orange_color" ng-click="update_statut($index)">{{'valider' | translate}}</button>
+        </ul>
+      </div>
 
-      </ul>
 
     </ion-list>
 

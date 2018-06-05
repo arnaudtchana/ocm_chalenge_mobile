@@ -2,27 +2,29 @@
  * Created by user on 24/02/2018.
  */
 app
-  .controller('AjoutKiosqueCtrl', function($scope,$state,Restangular,$cordovaGeolocation,$auth,$sessionStorage,$ionicLoading) {
+  .controller('AjoutKiosqueCtrl', function($scope,$state,Restangular,$cordovaGeolocation,$auth,$sessionStorage,$ionicLoading,$translate) {
 
     /*on fait la requete restangular qui permet de recurer la liste des services en base de donnees
      * pour que lutilisateur choisisse le service qui l'interesse*/
     $scope.data = {};
-    $scope.services = {};
+    $scope.disponibilite = {};
     $scope.tel = "691612071";
     var options = {timeout: 10000, enableHighAccuracy: true};
-    var Services = Restangular.all('service');
+    //var Services = Restangular.all('service');
 
-    Services.getList().then(function (data) {
+    /*on a plus besoin de recuperer la liste des services au niveau de la base de donnees*/
+
+    /*Services.getList().then(function (data) {
       $scope.services = data;
       console.log($scope.services[0]);
-      /*on fait un foreach sur le resultat et on ajoute le champs ckecked*/
+      /!*on fait un foreach sur le resultat et on ajoute le champs ckecked*!/
       angular.forEach($scope.services,function (value,key) {
        // console.log(value);
         $scope.services[key].checked = false;
       })
       console.log($scope.services);
       //console.log($scope.services[0]);
-    })
+    })*/
     $scope.$on('$ionicView.enter', function () {
       $ionicLoading.show({
         template: 'Loading...',
@@ -40,19 +42,19 @@ app
 
     $scope.compte_boutique = function (isValid) {
       /*on verifie kau moins un service est cocher*/
-      var service=[];
+      /*var service=[];
       var i=0;
       angular.forEach($scope.services,function (value,key) {
         if(value.checked == true){
           service[i] = value.id;
           i++;
         }
-      })
-      if(service.length ==0){
+      })*/
+      /*if(service.length ==0){
         alert("selectionner au moins un service")
-      }else{
+      }else{*/
         /*on fait les requetes normalement*/
-        console.log(service);
+        //console.log(service);
         if(isValid){
           /*on recupere le user_id et on cree le compte du kiosque*/
           //console.log($auth.getToken());
@@ -63,7 +65,7 @@ app
             if(data.total ==0){
               /*on cree le compte*/
               $scope.data.user_id = $sessionStorage.user_id;
-              $scope.data.service = service;
+             // $scope.data.service = service;
               $ionicLoading.show({
                 template: 'Loading...',
               })
@@ -73,8 +75,8 @@ app
                 if(data.error){
                   $scope.error = data.error;
                 }else{
-                  /*si il n'y a pas derreur on passe a la page daccueil*/
-                  $state.go('app.accueil');
+                  /*si il n'y a pas derreur on passe a la page de la liste des kiosques*/
+                  $state.go('app.liste_kiosque');
                 }
                 console.log(data);
               },function (error) {
@@ -83,7 +85,9 @@ app
               })
             }else{
               /*on envoie le message d'erreur*/
-              $scope.erreur_nom_kiosque = "Le nom du kiosque est déjà utilisé";
+              $translate('nom_kiosque_utiliser').then(function (translation) {
+                $scope.erreur_nom_kiosque =translation;
+              })
               $scope.data.nom_kiosque="";
             }
 
@@ -93,7 +97,7 @@ app
 
           //alert('on cree le compte')
         }
-      }
+
 
 
     }
